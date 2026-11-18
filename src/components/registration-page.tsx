@@ -135,8 +135,8 @@ export default function RegistrationPage({ initialCount, initialAvailable }: Pro
                     sizes="(max-width: 1024px) 100vw, 500px"
                     className="object-cover"
                   />
-                  <div className="absolute left-[8%] top-[43%] w-[55%]">
-                    <p className="font-serif text-[13px] italic leading-none text-[#f8f4eb] sm:text-xl">{success.name}</p>
+                  <div className="absolute inset-x-[8%] top-[43%] text-center">
+                    <p className="inline-block border-b border-[#efa927] pb-1 font-serif text-[13px] italic leading-none text-[#efa927] sm:text-xl">{success.name}</p>
                   </div>
                 </div>
                 <div className="my-6 rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-sm">
