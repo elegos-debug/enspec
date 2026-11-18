@@ -1,5 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { normalizePhone, registrationSchema } from "./validation";
+import { generateInvitationPdf } from "./pdf";
 
 describe("registrationSchema", () => {
   const valid = {
@@ -23,5 +24,15 @@ describe("registrationSchema", () => {
 
   it("normalizes phone numbers consistently", () => {
     expect(normalizePhone("+212 (600) 123-456")).toBe("+212600123456");
+  });
+});
+
+describe("invitationPdf", () => {
+  it("generates a landscape personalized invitation", async () => {
+    const bytes = await generateInvitationPdf({
+      fullName: "Amina El Mansouri",
+      invitationId: "ENSPEC-TEST-0001",
+    });
+    expect(bytes.byteLength).toBeGreaterThan(100_000);
   });
 });
