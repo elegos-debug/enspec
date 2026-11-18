@@ -30,18 +30,19 @@ export async function generateInvitationPdf(data: InvitationData) {
     data.fullName.length > 24 ? 38 :
     46;
   const nameWidth = serifItalic.widthOfTextAtSize(data.fullName, nameSize);
-  const nameX = Math.max(74, (width - nameWidth) / 2 - 7);
+  const leftPanelCenter = 270;
+  const nameX = Math.max(74, leftPanelCenter - nameWidth / 2 - 7);
   page.drawText(data.fullName, {
     x: nameX,
-    y: 430,
+    y: 462,
     size: nameSize,
     font: serifItalic,
     color: gold,
   });
-  const lineWidth = Math.min(440, nameWidth + 90);
+  const lineWidth = Math.min(360, nameWidth + 70);
   page.drawLine({
-    start: { x: (width - lineWidth) / 2 - 7, y: 405 },
-    end: { x: (width + lineWidth) / 2 - 7, y: 405 },
+    start: { x: leftPanelCenter - lineWidth / 2 - 7, y: 442 },
+    end: { x: leftPanelCenter + lineWidth / 2 - 7, y: 442 },
     thickness: 1.2,
     color: gold,
   });
