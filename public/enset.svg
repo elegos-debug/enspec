@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 100">
+  <rect width="360" height="100" rx="12" fill="#090e24"/>
+  <text x="24" y="64" font-family="Arial,sans-serif" font-size="46" font-weight="700" fill="#fff" letter-spacing="2">ENSET</text>
+  <line x1="220" y1="25" x2="220" y2="75" stroke="#efa927" stroke-width="3"/>
+  <text x="238" y="58" font-family="Arial,sans-serif" font-size="23" fill="#fff" letter-spacing="1">M.HAMMEDIA</text>
+</svg>

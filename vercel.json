@@ -1,0 +1,11 @@
+{
+  "framework": "nextjs",
+  "functions": {
+    "src/app/api/register/route.ts": {
+      "maxDuration": 30
+    },
+    "src/app/api/admin/export/route.ts": {
+      "maxDuration": 30
+    }
+  }
+}
