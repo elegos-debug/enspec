@@ -34,15 +34,15 @@ export async function generateInvitationPdf(data: InvitationData) {
   const nameX = Math.max(74, leftPanelCenter - nameWidth / 2 - 7);
   page.drawText(data.fullName, {
     x: nameX,
-    y: 462,
+    y: 451,
     size: nameSize,
     font: serifItalic,
     color: gold,
   });
   const lineWidth = Math.min(360, nameWidth + 70);
   page.drawLine({
-    start: { x: leftPanelCenter - lineWidth / 2 - 7, y: 442 },
-    end: { x: leftPanelCenter + lineWidth / 2 - 7, y: 442 },
+    start: { x: leftPanelCenter - lineWidth / 2 - 7, y: 431 },
+    end: { x: leftPanelCenter + lineWidth / 2 - 7, y: 431 },
     thickness: 1.2,
     color: gold,
   });
