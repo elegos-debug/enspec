@@ -1,36 +1,20 @@
 "use client";
 
 import Image from "next/image";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { eventConfig } from "@/lib/config";
 import { registrationSchema } from "@/lib/validation";
 
-type Props = { initialCount: number; initialAvailable: boolean };
+type Props = { initialAvailable: boolean };
 type FieldErrors = Partial<Record<"fullName" | "phone" | "email" | "filiere" | "academicYear", string[]>>;
 
-export default function RegistrationPage({ initialCount, initialAvailable }: Props) {
+export default function RegistrationPage({ initialAvailable }: Props) {
   const [loading, setLoading] = useState(false);
   const [available, setAvailable] = useState(initialAvailable);
-  const [count, setCount] = useState(initialCount);
   const [errors, setErrors] = useState<FieldErrors>({});
   const [message, setMessage] = useState("");
   const [success, setSuccess] = useState<{ name: string; id: string; pdfBase64: string; filename: string } | null>(null);
 
-  useEffect(() => {
-    let cancelled = false;
-    fetch("/api/capacity")
-      .then((response) => response.json())
-      .then((data) => {
-        if (!cancelled && typeof data.count === "number") {
-          setCount(data.count);
-          setAvailable(data.available);
-        }
-      })
-      .catch(() => {});
-    return () => {
-      cancelled = true;
-    };
-  }, []);
 
   async function submit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -66,7 +50,6 @@ export default function RegistrationPage({ initialCount, initialAvailable }: Pro
         setMessage(data.message || "Registration could not be completed.");
         return;
       }
-      setCount((current) => current + 1);
       setSuccess({
         name: data.attendee.full_name,
         id: data.attendee.invitation_id,
@@ -90,9 +73,6 @@ export default function RegistrationPage({ initialCount, initialAvailable }: Pro
     link.click();
     URL.revokeObjectURL(url);
   }
-
-  const remaining = Math.max(0, eventConfig.capacity - count);
-  const percent = Math.min(100, Math.round((count / eventConfig.capacity) * 100));
 
   return (
     <main className="event-shell">
@@ -167,22 +147,6 @@ export default function RegistrationPage({ initialCount, initialAvailable }: Pro
               <div className="gold-border relative z-10 w-full rounded-2xl bg-[#11172f]/95 p-5 sm:p-8">
                 <p className="text-xs font-bold tracking-[.25em] text-[#efa927]">RESERVE YOUR SEAT</p>
                 <h2 className="mt-2 text-2xl font-bold sm:text-3xl">Registration</h2>
-                <div className="mt-4">
-                  <div className="mb-2 flex justify-between text-xs text-slate-300">
-                    <span>{count} registered</span><span>{remaining} seats remaining</span>
-                  </div>
-                  <div
-                    className="h-1.5 overflow-hidden rounded-full bg-white/10"
-                    role="progressbar"
-                    aria-label="Registration capacity"
-                    aria-valuemin={0}
-                    aria-valuemax={eventConfig.capacity}
-                    aria-valuenow={count}
-                  >
-                    <div className="h-full bg-[#efa927]" style={{ width: `${percent}%` }} />
-                  </div>
-                </div>
-
                 {!available ? (
                   <div className="mt-7 rounded-xl border border-red-400/40 bg-red-400/10 p-5 text-red-100">
                     <strong>Registration is closed</strong>

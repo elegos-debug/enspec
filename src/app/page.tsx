@@ -21,5 +21,5 @@ export default async function HomePage() {
     // The form is still rendered; the database RPC remains the final authority.
   }
 
-  return <RegistrationPage initialCount={count} initialAvailable={available} />;
+  return <RegistrationPage initialAvailable={available} />;
 }
