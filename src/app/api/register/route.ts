@@ -65,7 +65,10 @@ export async function POST(request: NextRequest) {
       filename: `${attendee.invitation_id}.pdf`,
     });
   } catch (error) {
-    console.error("Registration failed", error);
+    console.error("Registration failed", {
+      code: typeof error === "object" && error && "code" in error ? error.code : null,
+      message: error instanceof Error ? error.message : "Unknown server error",
+    });
     return NextResponse.json({ ok: false, message: "A server error occurred. Please try again." }, { status: 500 });
   }
 }
