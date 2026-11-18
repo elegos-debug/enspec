@@ -45,6 +45,12 @@ alter table public.admins enable row level security;
 alter table public.event_settings enable row level security;
 alter table public.registration_attempts enable row level security;
 
+-- API role privileges. RLS then provides per-user access.
+grant usage on schema public to anon, authenticated, service_role;
+grant select on public.admins to authenticated;
+grant select, update on public.attendees to authenticated;
+grant select on public.event_settings to authenticated;
+
 -- Admins may read their own authorization row. No attendee data is public.
 drop policy if exists "Admins can read own admin record" on public.admins;
 create policy "Admins can read own admin record"

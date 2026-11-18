@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createServerSupabase } from "@/lib/supabase/server";
+import { createAdminClient } from "@/lib/supabase/admin";
 
 export const runtime = "nodejs";
 
@@ -27,7 +28,8 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ message: "The administrator session could not be created." }, { status: 401 });
     }
 
-    const { data: admin, error: adminError } = await supabase
+    const service = createAdminClient();
+    const { data: admin, error: adminError } = await service
       .from("admins")
       .select("user_id")
       .eq("user_id", userId)
