@@ -81,12 +81,12 @@ export default function RegistrationPage({ initialCount, initialAvailable }: Pro
   return (
     <main className="event-shell">
       <div className="mx-auto min-h-screen max-w-[1450px] px-4 py-5 sm:px-8 lg:px-12">
-        <header className="gold-border mb-5 h-[150px] overflow-hidden rounded-sm sm:h-[190px] lg:h-[220px]">
+        <header className="gold-border mb-5 aspect-[955/199] overflow-hidden rounded-sm">
           <Image
             src="/enspec-header.png"
             alt="ADE, ENSET Mohammedia and ENSPEC"
-            width={1296}
-            height={310}
+            width={955}
+            height={199}
             priority
             className="h-full w-full object-cover"
           />
