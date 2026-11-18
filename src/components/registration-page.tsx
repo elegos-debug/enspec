@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { eventConfig } from "@/lib/config";
 import { registrationSchema } from "@/lib/validation";
 
@@ -15,6 +15,22 @@ export default function RegistrationPage({ initialCount, initialAvailable }: Pro
   const [errors, setErrors] = useState<FieldErrors>({});
   const [message, setMessage] = useState("");
   const [success, setSuccess] = useState<{ name: string; id: string; pdfBase64: string; filename: string } | null>(null);
+
+  useEffect(() => {
+    let cancelled = false;
+    fetch("/api/capacity")
+      .then((response) => response.json())
+      .then((data) => {
+        if (!cancelled && typeof data.count === "number") {
+          setCount(data.count);
+          setAvailable(data.available);
+        }
+      })
+      .catch(() => {});
+    return () => {
+      cancelled = true;
+    };
+  }, []);
 
   async function submit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -155,7 +171,14 @@ export default function RegistrationPage({ initialCount, initialAvailable }: Pro
                   <div className="mb-2 flex justify-between text-xs text-slate-300">
                     <span>{count} registered</span><span>{remaining} seats remaining</span>
                   </div>
-                  <div className="h-1.5 overflow-hidden rounded-full bg-white/10">
+                  <div
+                    className="h-1.5 overflow-hidden rounded-full bg-white/10"
+                    role="progressbar"
+                    aria-label="Registration capacity"
+                    aria-valuemin={0}
+                    aria-valuemax={eventConfig.capacity}
+                    aria-valuenow={count}
+                  >
                     <div className="h-full bg-[#efa927]" style={{ width: `${percent}%` }} />
                   </div>
                 </div>
