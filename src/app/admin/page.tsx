@@ -33,20 +33,15 @@ export default async function AdminPage({
 }: {
   searchParams: Promise<{ q?: string; filiere?: string; year?: string; sort?: string }>;
 }) {
-  try {
-    const sessionSupabase = await createServerSupabase();
-    const { data: { user } } = await sessionSupabase.auth.getUser();
-    if (!user) redirect("/admin/login");
-    const { data: admin } = await sessionSupabase
-      .from("admins")
-      .select("user_id")
-      .eq("user_id", user.id)
-      .maybeSingle();
-    if (!admin) redirect("/admin/login");
-  } catch (error) {
-    if (error instanceof Error && error.message.includes("NEXT_REDIRECT")) throw error;
-    redirect("/admin/login");
-  }
+  const sessionSupabase = await createServerSupabase();
+  const { data: { user } } = await sessionSupabase.auth.getUser();
+  if (!user) redirect("/admin/login");
+  const { data: admin } = await sessionSupabase
+    .from("admins")
+    .select("user_id")
+    .eq("user_id", user.id)
+    .maybeSingle();
+  if (!admin) redirect("/admin/login");
 
   const params = await searchParams;
   const supabase = createAdminClient();
