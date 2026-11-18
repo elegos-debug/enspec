@@ -82,11 +82,14 @@ export default function RegistrationPage({ initialCount, initialAvailable }: Pro
     <main className="event-shell">
       <div className="mx-auto min-h-screen max-w-[1450px] px-4 py-5 sm:px-8 lg:px-12">
         <header className="gold-border mb-5 flex items-center justify-between rounded-sm px-4 py-3 sm:px-7">
-          <div className="flex items-center gap-3 sm:gap-5">
-            <Image src="/ade.png" alt="ADE" width={74} height={34} className="hidden h-8 w-auto sm:block" />
-            <Image src="/enset.png" alt="ENSET Mohammedia" width={150} height={42} className="h-9 w-auto sm:h-10" />
-          </div>
-          <Image src="/enspec.png" alt="ENSPEC" width={54} height={54} className="h-12 w-auto sm:h-14" />
+          <Image
+            src="/enspec-header.png"
+            alt="ADE, ENSET Mohammedia and ENSPEC"
+            width={407}
+            height={98}
+            priority
+            className="mx-auto h-[62px] w-auto max-w-full object-contain sm:h-[78px]"
+          />
         </header>
 
         <section className="gold-border relative grid min-h-[720px] overflow-hidden rounded-sm lg:grid-cols-[1.05fr_.95fr]">
@@ -124,17 +127,16 @@ export default function RegistrationPage({ initialCount, initialAvailable }: Pro
                 <p className="text-xs font-bold tracking-[.25em] text-[#efa927]">REGISTRATION CONFIRMED</p>
                 <h2 className="mt-3 text-3xl font-bold">Welcome, {success.name}</h2>
                 <p className="mt-3 text-sm text-slate-300">Your personalized invitation is ready.</p>
-                <div className="relative mt-6 aspect-[4/3] w-full overflow-hidden rounded-lg border border-[#efa927]/50 bg-[#090e24]">
+                <div className="relative mt-6 aspect-[534/414] w-full overflow-hidden rounded-lg border border-[#efa927]/50 bg-[#090e24]">
                   <Image
-                    src="/assets/enspec-invitation-reference.png"
+                    src="/assets/enspec-invitation-card.png"
                     alt="ENSPEC invitation card"
                     fill
                     sizes="(max-width: 1024px) 100vw, 500px"
                     className="object-cover"
                   />
-                  <div className="absolute left-[7%] top-[40%] w-[38%] rounded-sm bg-[#090e24]/95 px-2 py-3 text-left">
-                    <p className="text-[7px] font-bold tracking-[.18em] text-[#efa927] sm:text-[9px]">PERSONALLY INVITED</p>
-                    <p className="mt-1 font-serif text-[12px] italic leading-tight text-[#f8f4eb] sm:text-lg">{success.name}</p>
+                  <div className="absolute left-[6%] top-[35%] flex h-[14%] w-[88%] items-center justify-center bg-[#090e24] px-2">
+                    <p className="text-center font-serif text-[15px] italic leading-none text-[#f8f4eb] sm:text-2xl">{success.name}</p>
                   </div>
                 </div>
                 <div className="my-6 rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-sm">
