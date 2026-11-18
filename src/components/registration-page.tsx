@@ -81,14 +81,14 @@ export default function RegistrationPage({ initialCount, initialAvailable }: Pro
   return (
     <main className="event-shell">
       <div className="mx-auto min-h-screen max-w-[1450px] px-4 py-5 sm:px-8 lg:px-12">
-        <header className="gold-border mb-5 flex items-center justify-between rounded-sm px-4 py-3 sm:px-7">
+        <header className="gold-border mb-5 h-[150px] overflow-hidden rounded-sm sm:h-[190px] lg:h-[220px]">
           <Image
             src="/enspec-header.png"
             alt="ADE, ENSET Mohammedia and ENSPEC"
-            width={407}
-            height={98}
+            width={1296}
+            height={310}
             priority
-            className="mx-auto h-[62px] w-auto max-w-full object-contain sm:h-[78px]"
+            className="h-full w-full object-cover"
           />
         </header>
 
@@ -127,7 +127,7 @@ export default function RegistrationPage({ initialCount, initialAvailable }: Pro
                 <p className="text-xs font-bold tracking-[.25em] text-[#efa927]">REGISTRATION CONFIRMED</p>
                 <h2 className="mt-3 text-3xl font-bold">Welcome, {success.name}</h2>
                 <p className="mt-3 text-sm text-slate-300">Your personalized invitation is ready.</p>
-                <div className="relative mt-6 aspect-[534/414] w-full overflow-hidden rounded-lg border border-[#efa927]/50 bg-[#090e24]">
+                <div className="relative mt-6 aspect-[1024/765] w-full overflow-hidden rounded-lg border border-[#efa927]/50 bg-[#090e24]">
                   <Image
                     src="/assets/enspec-invitation-card.png"
                     alt="ENSPEC invitation card"
@@ -135,8 +135,8 @@ export default function RegistrationPage({ initialCount, initialAvailable }: Pro
                     sizes="(max-width: 1024px) 100vw, 500px"
                     className="object-cover"
                   />
-                  <div className="absolute left-[6%] top-[35%] flex h-[14%] w-[88%] items-center justify-center bg-[#090e24] px-2">
-                    <p className="text-center font-serif text-[15px] italic leading-none text-[#f8f4eb] sm:text-2xl">{success.name}</p>
+                  <div className="absolute left-[8%] top-[43%] w-[55%]">
+                    <p className="font-serif text-[13px] italic leading-none text-[#f8f4eb] sm:text-xl">{success.name}</p>
                   </div>
                 </div>
                 <div className="my-6 rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-sm">
