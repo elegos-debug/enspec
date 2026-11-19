@@ -5,11 +5,19 @@ import { createAdminClient } from "@/lib/supabase/admin";
 export const runtime = "nodejs";
 
 export async function POST(request: NextRequest) {
-  const body = await request.json().catch(() => null);
+  const raw = await request.text();
+  if (raw.length > 2048) return NextResponse.json({ message: "Request is too large." }, { status: 413 });
+  const body = await (() => {
+    try {
+      return Promise.resolve(JSON.parse(raw));
+    } catch {
+      return Promise.resolve(null);
+    }
+  })();
   const email = String(body?.email || "").trim().toLowerCase();
   const password = String(body?.password || "");
 
-  if (!email || !password) {
+  if (!email || !password || email.length > 254 || password.length > 200) {
     return NextResponse.json({ message: "Email and password are required." }, { status: 400 });
   }
 

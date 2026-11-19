@@ -1,13 +1,31 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createHash } from "node:crypto";
+import { eventConfig } from "@/lib/config";
 import { registrationSchema, normalizePhone } from "@/lib/validation";
 import { createAdminClient } from "@/lib/supabase/admin";
 import { generateInvitationPdf } from "@/lib/pdf";
 
 export const runtime = "nodejs";
+export const dynamic = "force-dynamic";
 
 export async function POST(request: NextRequest) {
-  const json = await request.json().catch(() => null);
+  if (!eventConfig.registrationOpen) {
+    return NextResponse.json({ ok: false, code: "REGISTRATION_CLOSED", message: "Registration is closed." }, { status: 403 });
+  }
+
+  const raw = await request.text();
+  if (raw.length > 4096) {
+    return NextResponse.json({ ok: false, code: "PAYLOAD_TOO_LARGE", message: "Request is too large." }, { status: 413 });
+  }
+  let json: unknown;
+  try {
+    json = JSON.parse(raw);
+  } catch {
+    return NextResponse.json({ ok: false, code: "BAD_JSON", message: "Invalid request." }, { status: 400 });
+  }
+  if (json && typeof json === "object" && (json as Record<string, unknown>).website) {
+    return NextResponse.json({ ok: false, code: "BAD_REQUEST", message: "Invalid request." }, { status: 400 });
+  }
   const parsed = registrationSchema.safeParse(json);
   if (!parsed.success) {
     return NextResponse.json(

@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { createServerSupabase } from "@/lib/supabase/server";
 import { createAdminClient } from "@/lib/supabase/admin";
+import { toCsv } from "@/lib/csv";
 
 export const runtime = "nodejs";
 
@@ -18,16 +19,18 @@ export async function GET() {
     .order("registered_at", { ascending: false });
   if (error) return NextResponse.json({ error: "Export failed" }, { status: 500 });
 
-  const escape = (value: unknown) => {
-    const text = String(value ?? "");
-    return `"${text.replace(/"/g, '""')}"`;
-  };
   const headers = ["full_name", "phone", "email", "filiere", "academic_year", "invitation_id", "registered_at", "attendance_status"];
-  const rows = [headers.join(","), ...(data || []).map((row) => headers.map((header) => escape(row[header as keyof typeof row])).join(","))];
-  return new NextResponse(rows.join("\n"), {
+  const rows: unknown[][] = [
+    ["Full name", "Phone", "Email", "Filière", "Academic year", "Invitation ID", "Registered at (UTC)", "Attendance"],
+    ...(data || []).map((row) => headers.map((header) => header === "registered_at"
+      ? new Date(row[header as keyof typeof row] as string).toISOString()
+      : row[header as keyof typeof row])),
+  ];
+  return new NextResponse(toCsv(rows), {
     headers: {
       "Content-Type": "text/csv; charset=utf-8",
       "Content-Disposition": 'attachment; filename="enspec-attendees.csv"',
+      "Cache-Control": "no-store",
     },
   });
 }

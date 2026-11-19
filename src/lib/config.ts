@@ -5,6 +5,7 @@ export const eventConfig = {
   timeLabel: "11:00 AM",
   location: "ENSET Mohammedia – Salle 10",
   capacity: 200,
+  registrationOpen: true,
   academicYears: ["1st Year", "2nd Year", "3rd Year", "4th Year", "5th Year"],
   filieres: [
     "GIL",
